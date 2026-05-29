@@ -1815,7 +1815,7 @@
 
     async function autoSyncToGoogleSheets() {
 
-        const scriptURL = 'https://script.google.com/macros/s/AKfycbyzIaJiVTB0UH3mVu70JyYy88A_-5y14vn1YYMAay7IxasU8khIv_hxUqwMEgdcTcZj/exec
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbxSUA7GWb2FzJxBkFJg0ZpJwJ3QUk1438R_KO-29FAuqtcXpW9hUoQs1SwkbLtQjyFNOQ/exec';
 
         try {
 
@@ -3346,7 +3346,7 @@
     }
 
     async function syncToGoogleSheets(event = null) {
-         const scriptURL = 'https://script.google.com/macros/s/AKfycbyzIaJiVTB0UH3mVu70JyYy88A_-5y14vn1YYMAay7IxasU8khIv_hxUqwMEgdcTcZj/exec
+         const scriptURL = 'https://script.google.com/macros/s/AKfycbxSUA7GWb2FzJxBkFJg0ZpJwJ3QUk1438R_KO-29FAuqtcXpW9hUoQs1SwkbLtQjyFNOQ/exec';
         let btn = (event && event.currentTarget) ? event.currentTarget : null;
         let originalText = btn ? btn.innerText : "";
 
