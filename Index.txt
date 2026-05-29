@@ -1,4 +1,4 @@
-﻿﻿﻿﻿<!DOCTYPE html>
+﻿﻿<!DOCTYPE html>
 
 <html lang="en">
 
@@ -911,21 +911,21 @@
 
         <ul class="menu">
 
-            <li><a id="nav-dashboard" class="active-nav" href="#" data-target="dashboard">📊 Dashboard</a></li>
+            <li><a id="nav-dashboard" class="active-nav" onclick="show('dashboard')">📊 Dashboard</a></li>
 
-                        <li><a id="nav-customer" href="#" data-target="customer">👤 Clients Registry</a></li>
+                        <li><a id="nav-customer" onclick="show('customer')">👤 Clients Registry</a></li>
 
-            <li><a id="nav-dataentry" href="#" data-target="dataentry">📥 Orders & Data Entry</a></li>
+            <li><a id="nav-dataentry" onclick="show('dataentry')">📥 Orders & Data Entry</a></li>
 
-            <li><a id="nav-metrics" href="#" data-target="metrics">📈 Metrics Summary</a></li>  
+            <li><a id="nav-metrics" onclick="show('metrics')">📈 Metrics Summary</a></li>  
 
-            <li><a id="nav-report" href="#" data-target="report">📋 Ledger Statements</a></li>
+            <li><a id="nav-report" onclick="show('report')">📋 Ledger Statements</a></li>
 
         </ul>
 
         <div style="margin-top: auto; padding-top: 20px; border-top: 1px solid #334155;">
 
-            <button id="btn-clear-system" class="btn-danger" style="width:100%; padding:8px;"> Design By <br> Deababrata Samanta</button>
+            <button class="btn-danger" style="width:100%; padding:8px;" onclick="clearSystemData()"> Design By <br> Deababrata Samanta</button>
 
         </div>
 
@@ -1063,11 +1063,11 @@
 
                 <div class="quick-actions-btns">
 
-                    <button class="btn-dash-action" data-target="dataentry">📥 New Entry</button>
+                    <button class="btn-dash-action" onclick="show('dataentry')">📥 New Entry</button>
 
-                    <button class="btn-dash-action" data-target="customer">👤 Register Client</button>
+                    <button class="btn-dash-action" onclick="show('customer')">👤 Register Client</button>
 
-                    <button class="btn-dash-action" data-target="report">📋 Check Statements</button>
+                    <button class="btn-dash-action" onclick="show('report')">📋 Check Statements</button>
 
                 </div>
 
@@ -1203,7 +1203,7 @@
 
                     </div>
 
-                    <button id="btn-submit-cust" class="btn-primary">➕ Add Customer</button>
+                    <button id="btn-submit-cust" class="btn-primary" onclick="addCustomer()">➕ Add Customer</button>
 
                 </div>
 
@@ -1263,7 +1263,7 @@
 
                         <label>Assign Profile Customer Name *</label>
 
-                        <input type="text" id="cname" placeholder="Click to choose client..." readonly>
+                        <input type="text" id="cname" placeholder="Click to choose client..." onclick="toggleCustomerDropdown()" readonly>
 
                         <div id="customerList" class="dropdown-box"></div>
 
@@ -1319,7 +1319,7 @@
 
                     </div>
 
-                    <button id="btn-submit-job" class="btn-primary">➕ Save Data Entry</button>
+                    <button id="btn-submit-job" class="btn-primary" onclick="addJob()">➕ Save Data Entry</button>
 
                 </div>
 
@@ -1371,7 +1371,7 @@
 
                         </div>
 
-                        <button class="btn-reset" data-action="resetJobFilters">🔄 Reset</button>
+                        <button class="btn-reset" onclick="resetJobFilters()">🔄 Reset</button>
 
                     </div>
 
@@ -1475,7 +1475,11 @@
 
                 <h3>Account Invoice Statement</h3>
 
-                    <button class="modal-close" data-action="closeInvoiceModal">&times;</button>
+                <button class="modal-close" onclick="closeInvoiceModal()">&times;</button>
+
+            </div>
+
+            <div style="margin-bottom:20px;">
 
                 <h4 style="color:var(--text-muted);">Client Identity Name: <span id="modalCustomerName" style="color:var(--text-main)">—</span></h4>
 
@@ -1523,7 +1527,7 @@
 
                     <input type="number" id="cashReceivedInput" placeholder="Enter Cash Received Amount" style="padding:10px; border-radius:8px; border:1px solid var(--border-color); flex:1;">
 
-                    <button id="btn-settlement" class="btn-primary" style="width:auto;">💾 Apply Settlement</button>
+                    <button class="btn-primary" style="width:auto;" onclick="processSmartSettlement()">💾 Apply Settlement</button>
 
                 </div>
 
@@ -1535,7 +1539,7 @@
 
                 <button id="modalPrintBtn" class="btn-history">🖨️ Print Statement</button>
 
-                <button class="btn-reset" data-action="closeInvoiceModal">Close</button>
+                <button class="btn-reset" onclick="closeInvoiceModal()">Close</button>
 
             </div>
 
@@ -1553,7 +1557,11 @@
 
                 <h3 id="historyCustomerName">Payment Transaction Logs</h3>
 
-                    <button class="modal-close" data-action="closeHistoryModal">&times;</button>
+                <button class="modal-close" onclick="closeHistoryModal()">&times;</button>
+
+            </div>
+
+            <table style="border:1px solid var(--border-color)">
 
                 <thead>
 
@@ -1577,7 +1585,7 @@
 
             <div class="modal-footer" style="text-align:right; margin-top:20px;">
 
-                <button class="btn-reset" data-action="closeHistoryModal">Close View</button>
+                <button class="btn-reset" onclick="closeHistoryModal()">Close View</button>
 
             </div>
 
@@ -1775,8 +1783,6 @@
 
         populatePivotDropdown();
 
-        initializeUiEvents();
-
         
 
         document.addEventListener('click', function(event) {
@@ -1792,24 +1798,6 @@
             }
 
         });
-        document.body.addEventListener('click', function(event) {
-            let target = event.target.closest('[data-target],[data-action]');
-            if (!target) return;
-
-            if (target.dataset.target) {
-                event.preventDefault();
-                show(target.dataset.target);
-                return;
-            }
-
-            if (target.dataset.action) {
-                event.preventDefault();
-                let action = target.dataset.action;
-                if (action && typeof window[action] === 'function') {
-                    window[action]();
-                }
-            }
-        });
 
     };
 
@@ -1821,104 +1809,34 @@
 
         localStorage.setItem('crm_jobs', JSON.stringify(jobs));
 
-        saveStateToGoogleSheets();
+        autoSyncToGoogleSheets();
 
-    }
-
-    function isAppsScriptContext() {
-        return typeof google !== 'undefined' && google.script && google.script.run;
-    }
-
-    function loadStateFromGoogleSheets() {
-        return new Promise(resolve => {
-            if (!isAppsScriptContext()) {
-                resolve(false);
-                return;
-            }
-
-            google.script.run
-                .withSuccessHandler(function(data) {
-                    if (!data || !Array.isArray(data.customers) || !Array.isArray(data.jobs)) {
-                        resolve(false);
-                        return;
-                    }
-
-                    customers = data.customers;
-                    jobs = data.jobs;
-
-                    localStorage.setItem('crm_customers', JSON.stringify(customers));
-                    localStorage.setItem('crm_jobs', JSON.stringify(jobs));
-                    if (ensureJobIds(jobs)) {
-                        localStorage.setItem('crm_jobs', JSON.stringify(jobs));
-                    }
-
-                    refreshAllViews();
-                    resolve(true);
-                })
-                .withFailureHandler(function() {
-                    resolve(false);
-                })
-                .getDataFromSheet();
-        });
-    }
-
-    function saveStateToGoogleSheets() {
-        if (!isAppsScriptContext()) {
-            return;
-        }
-
-        google.script.run
-            .withFailureHandler(function(error) {
-                console.error('Google Sheets save failed:', error);
-            })
-            .saveDataToSheet({ customers, jobs });
     }
 
     async function autoSyncToGoogleSheets() {
-        if (isAppsScriptContext()) {
-            saveStateToGoogleSheets();
-            console.log('✅ Auto-synced to Google Sheets via Apps Script');
-            return;
-        }
 
-        const scriptURL = 'https://script.google.com/macros/s/AKfycbxg3Aluf1FiLqs6zHGVMARETBb6UekNdB7qYIjeg1mRwFHyMdKBggdrrJ1bJKIAFaOxBA/exec';
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbxSUA7GWb2FzJxBkFJg0ZpJwJ3QUk1438R_KO-29FAuqtcXpW9hUoQs1SwkbLtQjyFNOQ/exec';
 
         try {
-            let customersData = customers.map(c => [
-                c.name,
-                c.mobile,
-                c.email || '',
-                c.shop || '',
-                c.address || ''
-            ]);
 
-            let jobsData = jobs.map(j => [
-                j.id || '',
-                j.relatedJobId || '',
-                j.date || '',
-                j.cname || '',
-                j.description || '—',
-                j.size || '—',
-                j.price || 0,
-                j.status || '',
-                j.payDate || '',
-                j.paymentHistory ? 'TRUE' : 'FALSE'
-            ]);
+            await fetch(scriptURL, {
 
-            await fetch(scriptURL, {https://script.google.com/macros/s/AKfycbxvPG3bDwMIzU66qR4uWAUg7vuz8jwkcRALNGP1dI3bbCabgWZCzKAiTkGMYo5_s0l3jw/exec
                 method: 'POST',
+
                 mode: 'no-cors',
-                body: JSON.stringify({ 
-                    action: 'sync',
-                    customers: customersData,
-                    jobs: jobsData,
-                    timestamp: new Date().toISOString()
-                })
+
+                body: JSON.stringify({ customers, jobs })
+
             });
+
             console.log('✅ Auto-synced to Google Sheets');
+
         } catch (error) {
+
             console.error('❌ Auto-sync error:', error);
+
         }
+
     }
 
 
@@ -1985,52 +1903,6 @@
     }
 
 
-
-    function initializeUiEvents() {
-        document.querySelectorAll('[data-target]').forEach(element => {
-            element.addEventListener('click', function(event) {
-                event.preventDefault();
-                let target = this.dataset.target;
-                if (target) show(target);
-            });
-        });
-
-        if (document.getElementById('btn-clear-system')) {
-            document.getElementById('btn-clear-system').addEventListener('click', clearSystemData);
-        }
-
-        if (document.getElementById('btn-submit-cust')) {
-            document.getElementById('btn-submit-cust').addEventListener('click', addCustomer);
-        }
-
-        if (document.getElementById('btn-submit-job')) {
-            document.getElementById('btn-submit-job').addEventListener('click', addJob);
-        }
-
-        if (document.getElementById('cname')) {
-            document.getElementById('cname').addEventListener('click', toggleCustomerDropdown);
-        }
-
-        if (document.getElementById('btn-settlement')) {
-            document.getElementById('btn-settlement').addEventListener('click', processSmartSettlement);
-        }
-
-        if (document.getElementById('modalPrintBtn')) {
-            document.getElementById('modalPrintBtn').addEventListener('click', function() {
-                window.print();
-            });
-        }
-
-        document.querySelectorAll('[data-action]').forEach(element => {
-            element.addEventListener('click', function(event) {
-                event.preventDefault();
-                let action = this.dataset.action;
-                if (action && typeof window[action] === 'function') {
-                    window[action]();
-                }
-            });
-        });
-    }
 
     function renderJobs() {
 
@@ -3474,6 +3346,7 @@
     }
 
     async function syncToGoogleSheets(event = null) {
+         const scriptURL = 'https://script.google.com/macros/s/AKfycbxSUA7GWb2FzJxBkFJg0ZpJwJ3QUk1438R_KO-29FAuqtcXpW9hUoQs1SwkbLtQjyFNOQ/exec';
         let btn = (event && event.currentTarget) ? event.currentTarget : null;
         let originalText = btn ? btn.innerText : "";
 
@@ -3483,35 +3356,20 @@
         }
 
         try {
-            if (isAppsScriptContext()) {
-                saveStateToGoogleSheets();
-                if (event) alert("Google Sheet-এ ডেটা সফলভাবে সিঙ্ক হয়েছে!");
-            } else {
-                const scriptURL = 'https://script.google.com/macros/s/AKfycbxg3Aluf1FiLqs6zHGVMARETBb6UekNdB7qYIjeg1mRwFHyMdKBggdrrJ1bJKIAFaOxBA/exec';
-
-async function submitData() {
-
-  let data = {
-    name: document.getElementById("name").value,
-    phone: document.getElementById("phone").value,
-    work: document.getElementById("work").value,
-    amount: document.getElementById("amount").value
-  };
-
-  await fetch(scriptURL, {https://script.google.com/macros/s/AKfycbycmqBpupIEwhD02Qi6ksdjt0URy8A9RVeVnZrG-bprt-vbcd9QZFWdenfUsG7jZ80frg/exec
-    method: "POST",
-    body: JSON.stringify(data)
-  })
-  .then(res => res.json())
-  .then(response => {
-    alert("Data Saved Successfully!");
-    console.log(response);
-  })
-  .catch(error => {
-    console.error("Error!", error.message);
-  });
-
-}
+            await fetch(scriptURL, {
+                method: 'POST',
+                mode: 'no-cors',
+                body: JSON.stringify({ customers, jobs })
+            });
+            if (event) alert("Google Sheet-এ ডেটা সফলভাবে সিঙ্ক হয়েছে!");
+        } catch (error) {
+            console.error('Sync error:', error);
+            if (event) alert("সিঙ্ক করতে সমস্যা হয়েছে। কনসোল চেক করুন।");
+        } finally {
+            if (btn) {
+                btn.innerText = originalText;
+                btn.disabled = false;
+            }
         }
     }
 
