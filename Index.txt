@@ -3488,21 +3488,30 @@
                 if (event) alert("Google Sheet-এ ডেটা সফলভাবে সিঙ্ক হয়েছে!");
             } else {
                 const scriptURL = 'https://script.google.com/macros/s/AKfycbxg3Aluf1FiLqs6zHGVMARETBb6UekNdB7qYIjeg1mRwFHyMdKBggdrrJ1bJKIAFaOxBA/exec';
-                await fetch(scriptURL, {
-                    method: 'POST',
-                    mode: 'no-cors',
-                    body: JSON.stringify({ customers, jobs })
-                });
-                if (event) alert("Google Sheet-এ ডেটা সফলভাবে সিঙ্ক হয়েছে!");
-            }
-        } catch (error) {
-            console.error('Sync error:', error);
-            if (event) alert("সিঙ্ক করতে সমস্যা হয়েছে। কনসোল চেক করুন।");
-        } finally {
-            if (btn) {
-                btn.innerText = originalText;
-                btn.disabled = false;
-            }
+
+async function submitData() {
+
+  let data = {
+    name: document.getElementById("name").value,
+    phone: document.getElementById("phone").value,
+    work: document.getElementById("work").value,
+    amount: document.getElementById("amount").value
+  };
+
+  await fetch(scriptURL, {https://script.google.com/macros/s/AKfycbycmqBpupIEwhD02Qi6ksdjt0URy8A9RVeVnZrG-bprt-vbcd9QZFWdenfUsG7jZ80frg/exec
+    method: "POST",
+    body: JSON.stringify(data)
+  })
+  .then(res => res.json())
+  .then(response => {
+    alert("Data Saved Successfully!");
+    console.log(response);
+  })
+  .catch(error => {
+    console.error("Error!", error.message);
+  });
+
+}
         }
     }
 
